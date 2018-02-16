@@ -1,6 +1,6 @@
 (ns gilded-rose.core-spec
-(:require [speclj.core :refer :all]
-          [gilded-rose.core :refer [update-quality]]))
+(:require [clojure.test :refer :all]
+          [gilded-rose.core :refer [update-quality item]]))
 
-(describe "gilded rose"
-          (it "TODO - write tests later"))
+(deftest gilded-rose-test
+  (is (= "fixme" (:name (first (update-quality [(item "foo" 0 0)]))))))
