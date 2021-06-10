@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import java.util.ArrayList;
+
 class GildedRose {
     Item[] items;
 
@@ -8,6 +10,7 @@ class GildedRose {
     }
 //refactor all of this!
     public void updateQuality() {
+
         for (int i = 0; i < items.length; i++) {
             if (!items[i].name.equals("Aged Brie")
                     && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
@@ -59,4 +62,37 @@ class GildedRose {
             }
         }
     }
+
+//should solve to just use the category rather than the entire name.
+    public void getCategoryModifier(){
+        for (Item item:items
+             ) {
+            switch(item.name){
+                case "Conjured Mana Cake":
+                    qualityDegradeTwiceAsFast();
+                case "Sulfuras, Hand of Ragnaros":
+                    doNothing();
+                case "Aged Brie":
+                    increaseQuality();
+                case "Backstage passes to a TAFKAL80ETC concert":
+                    addQualityAndSaleInQualifier();
+                default:
+            }
+
+        }
+
+        }
+
+    private void addQualityAndSaleInQualifier() {
+    }
+
+    private void increaseQuality() {
+    }
+
+    private void doNothing() {
+    }
+
+    private void qualityDegradeTwiceAsFast() {
+    }
 }
+
