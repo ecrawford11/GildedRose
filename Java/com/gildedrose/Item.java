@@ -1,5 +1,5 @@
 package com.gildedrose;
-
+//can't change this class due to goblin
 public class Item {
 
     public String name;
