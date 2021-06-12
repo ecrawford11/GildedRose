@@ -12,7 +12,7 @@ public class GildedRoseTest {
         Item[] items = new Item[] { new Item("foo", 0, 0) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
-        assertEquals("fixme", app.items[0].name);
+        assertEquals("foo", app.items[0].name);
     }
 @Test
     public void systemLowersSellInAndQualityValueDaily(){
@@ -65,6 +65,19 @@ public class GildedRoseTest {
         app.updateQuality();
         assertEquals(13,app.items[0].quality);
         assertEquals(12, app.items[0].sellIn);
+    }
+
+    @Test
+    public void agedBrieQualityIncreasesTwiceAsFastAsSellInDateDecreasesPastZero(){
+        Item[] items = new Item[] { new Item("Aged Brie", 0, 10) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(12,app.items[0].quality);
+        assertEquals(-1, app.items[0].sellIn);
+        app.updateQuality();
+        assertEquals(14,app.items[0].quality);
+        assertEquals(-2, app.items[0].sellIn);
+
     }
 
 // //    Need to add to code & test - quality is never over 50 - what if start with quality over 50? - should get exception
