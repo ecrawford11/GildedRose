@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import com.gildedrose.Items.Item;
+
 class GildedRose {
     Item[] items;
 
@@ -10,30 +12,30 @@ class GildedRose {
     //refactor all of this!
     public void updateQuality() {
 
-        for (int i = 0; i < items.length; i++) {
+        for (Item item : items) {
 
-            switch (items[i].name) {
+            switch (item.name) {
                 case "Sulfuras, Hand of Ragnaros":
                     break;
                 case "Conjured Mana Cake":
-                    items[i].quality = qualityDegradeTwiceAsFast(items[i].quality);
-                    items[i].sellIn = decreaseSellIn(items[i].sellIn);
+                    item.quality = qualityDegradeTwiceAsFast(item.quality);
+                    item.sellIn = decreaseSellIn(item.sellIn);
                     break;
                 case "Aged Brie":
-                    items[i].quality = qualityLessThan50(items[i].quality);
-                    items[i].sellIn = decreaseSellIn(items[i].sellIn);
+                    item.quality = isLessThanHighestAllowedQualityValue(item.quality);
+                    item.sellIn = decreaseSellIn(item.sellIn);
                     //in original code, Aged Brie actually increases in quality twice as fast after zero
-                    if (items[i].sellIn < 0) {
-                        items[i].quality = qualityLessThan50(items[i].quality);
+                    if (item.sellIn < 0) {
+                        item.quality = isLessThanHighestAllowedQualityValue(item.quality);
                     }
                     break;
                 case "Backstage passes to a TAFKAL80ETC concert":
-                    items[i].quality = backStageQuality(items[i].sellIn, items[i].quality);
-                    items[i].sellIn = decreaseSellIn(items[i].sellIn);
+                    item.quality = backStageQuality(item.sellIn, item.quality);
+                    item.sellIn = decreaseSellIn(item.sellIn);
                     break;
                 default:
-                    items[i].quality = decreaseQuality(items[i].sellIn,items[i].quality);
-                    items[i].sellIn = decreaseSellIn(items[i].sellIn);
+                    item.quality = decreaseQuality(item.sellIn,item.quality);
+                    item.sellIn = decreaseSellIn(item.sellIn);
 
             }
         }
@@ -48,7 +50,7 @@ class GildedRose {
         return quality;
     }
 
-    private int qualityLessThan50(int quality) {
+    private int isLessThanHighestAllowedQualityValue(int quality) {
         if (quality < 50) {
             quality = increaseQuality(quality);
         }
@@ -58,10 +60,10 @@ class GildedRose {
     private int backStageQuality(int sellIn, int quality) {
         quality =increaseQuality(quality);
         if (sellIn < 11) {
-            quality=qualityLessThan50(quality);
+            quality=isLessThanHighestAllowedQualityValue(quality);
         }
         if (sellIn < 6) {
-            quality= qualityLessThan50(quality);
+            quality= isLessThanHighestAllowedQualityValue(quality);
         }
         if (sellIn <= 0) {
             quality = 0;
