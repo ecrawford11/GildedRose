@@ -1,5 +1,7 @@
 package com.gildedrose.Items;
 
+import com.gildedrose.InvalidQualityException;
+
 public class BasicItem implements CustomizedItem {
 
     private final Item item;
@@ -11,6 +13,13 @@ public class BasicItem implements CustomizedItem {
     public void updateState() {
         item.quality = updateQuality();
         item.sellIn = decreaseSellIn();
+    }
+
+    @Override
+    public void checkMinAndMaxQuality() throws InvalidQualityException {
+        if (item.quality > 50 || item.quality < 0) {
+            throw new InvalidQualityException(item.name + " quality cannot equal more than 50 or less than zero");
+        }
     }
 
     public int updateQuality() {

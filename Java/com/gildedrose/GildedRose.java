@@ -16,32 +16,55 @@ class GildedRose {
     }
 
 
-    public void updateQuality() {
+    public void updateQuality() throws InvalidQualityException {
 
         for (Item item : items) {
-//checkMinAndMaxQuality(item);
+
             switch (item.name) {
                 case sulfras:
-                    new Sulfuras().updateState();
+                    Sulfuras sulfuras = new Sulfuras(item);
+
+                    sulfuras.checkMinAndMaxQuality();
+                    sulfuras.updateState();
+
                     break;
 
                 case conjured:
-                    new Conjured(item).updateState();
+                    Conjured conjured = new Conjured(item);
+
+                    conjured.checkMinAndMaxQuality();
+
+                    conjured.updateState();
                     break;
+
                 case agedBrie:
-                    new Brie(item).updateState();
+                    Brie agedBrie = new Brie(item);
+
+                    agedBrie.checkMinAndMaxQuality();
+
+                    agedBrie.updateState();
                     break;
 
                 case backstagePasses:
-                    new BackstagePasses(item).updateState();
+                    BackstagePasses backstagePasses = new BackstagePasses(item);
+
+                    backstagePasses.checkMinAndMaxQuality();
+
+                    backstagePasses.updateState();
                     break;
+
                 default:
-                    new BasicItem(item).updateState();
+                    BasicItem basicItem = new BasicItem(item);
+
+                    basicItem.checkMinAndMaxQuality();
+
+                    basicItem.updateState();
                     break;
             }
 
         }
     }
+
 }
 
 

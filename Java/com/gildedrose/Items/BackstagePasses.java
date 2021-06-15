@@ -1,5 +1,7 @@
 package com.gildedrose.Items;
 
+import com.gildedrose.InvalidQualityException;
+
 public class BackstagePasses implements CustomizedItem {
 
     private final Item item;
@@ -12,6 +14,13 @@ public class BackstagePasses implements CustomizedItem {
     public void updateState() {
         item.quality = backStageQuality();
         item.sellIn = decreaseSellIn();
+    }
+
+    @Override
+    public void checkMinAndMaxQuality() throws InvalidQualityException {
+        if (item.quality > 50 || item.quality < 0) {
+            throw new InvalidQualityException("Backstage Passes quality cannot equal more than 50 or less than zero");
+        }
     }
 
     private int backStageQuality() {
@@ -39,7 +48,8 @@ public class BackstagePasses implements CustomizedItem {
         }
         return item.quality;
     }
-    public  int decreaseSellIn() {
+
+    public int decreaseSellIn() {
         item.sellIn = item.sellIn - 1;
         return item.sellIn;
     }

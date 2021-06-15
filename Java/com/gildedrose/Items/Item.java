@@ -1,4 +1,5 @@
 package com.gildedrose.Items;
+
 //can't change this class due to goblin
 public class Item {
 
@@ -14,8 +15,8 @@ public class Item {
         this.quality = quality;
     }
 
-   @Override
-   public String toString() {
+    @Override
+    public String toString() {
         return this.name + ", " + this.sellIn + ", " + this.quality;
     }
 }
