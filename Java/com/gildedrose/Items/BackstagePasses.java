@@ -1,23 +1,46 @@
 package com.gildedrose.Items;
 
-public class BackstagePasses extends Item implements CustomizedItem  {
+public class BackstagePasses implements CustomizedItem {
 
-    public BackstagePasses(String name, int sellIn, int quality) {
-        super(name, sellIn, quality);
-    }
-    @Override
-    public void updateState(int sellIn, int quality) {
+    private final Item item;
 
+    public BackstagePasses(Item item) {
+        this.item = item;
     }
 
     @Override
-    public int decreaseQuality(int sellIn, int quality) {
-        return 0;
+    public void updateState() {
+        item.quality = backStageQuality();
+        item.sellIn = decreaseSellIn();
     }
 
-    @Override
-    public int decreaseSellIn(int sellIn) {
-        return 0;
+    private int backStageQuality() {
+        item.quality = increaseQuality();
+        if (item.sellIn < 11) {
+            item.quality = isLessThanHighestAllowedQualityValue();
+        }
+        if (item.sellIn < 6) {
+            item.quality = isLessThanHighestAllowedQualityValue();
+        }
+        if (item.sellIn <= 0) {
+            item.quality = 0;
+        }
+        return item.quality;
     }
 
+    private int increaseQuality() {
+        item.quality = item.quality + 1;
+        return item.quality;
+    }
+
+    private int isLessThanHighestAllowedQualityValue() {
+        if (item.quality < 50) {
+            item.quality = increaseQuality();
+        }
+        return item.quality;
+    }
+    public  int decreaseSellIn() {
+        item.sellIn = item.sellIn - 1;
+        return item.sellIn;
+    }
 }

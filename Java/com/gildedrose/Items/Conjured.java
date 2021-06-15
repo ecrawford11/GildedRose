@@ -1,26 +1,24 @@
 package com.gildedrose.Items;
 
-public class Conjured extends Item implements CustomizedItem  {
-    public Conjured(String name, int sellIn, int quality) {
-        super(name, sellIn, quality);
+public class Conjured implements CustomizedItem {
+
+    private final Item item;
+
+    public Conjured(Item item) {
+        this.item = item;
     }
 
     @Override
-    public void updateState(int sellIn, int quality) {
-
+    public void updateState() {
+        item.quality = qualityDegradeTwiceAsFast(item.quality);
+        item.sellIn = decreaseSellIn(item.sellIn);
     }
-
-    @Override
-    public int decreaseQuality(int sellIn, int quality) {
-        return 0;
-    }
-
-    @Override
-    public int decreaseSellIn(int sellIn) {
-        return 0;
-    }
-    public  static int qualityDegradeTwiceAsFast(int quality) {
+    private int qualityDegradeTwiceAsFast(int quality) {
         quality = quality - 2;
         return quality;
+    }
+    private int decreaseSellIn(int sellIn) {
+        sellIn = sellIn - 1;
+        return sellIn;
     }
 }

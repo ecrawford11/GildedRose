@@ -1,23 +1,40 @@
 package com.gildedrose.Items;
 
-public class Brie extends Item implements CustomizedItem {
+public class Brie implements CustomizedItem {
 
-    public Brie(String name, int sellIn, int quality) {
-        super(name, sellIn, quality);
+private final Item item;
+
+    public Brie(Item item) {
+        this.item = item;
     }
 
-    @Override
-    public void updateState(int sellIn, int quality) {
+    public void updateState() {
+        item.quality = UpdateBrieQuality();
+        item.sellIn = decreaseSellIn();
+        //in original code, Aged Brie actually increases in quality twice as fast after zero
+        if (item.sellIn < 0) {
+            item.quality = isLessThanHighestAllowedQualityValue(item.quality);
+        }
+    }
+    public  int UpdateBrieQuality() {
+        item.quality = isLessThanHighestAllowedQualityValue(item.quality);
 
+        return item.quality;
     }
 
-    @Override
-    public int decreaseQuality(int sellIn, int quality) {
-        return 0;
+    private int isLessThanHighestAllowedQualityValue(int quality) {
+        if (quality < 50) {
+            quality = increaseQuality(quality);
+        }
+        return quality;
     }
 
-    @Override
-    public int decreaseSellIn(int sellIn) {
-        return 0;
+    private int increaseQuality(int quality) {
+        quality = quality + 1;
+        return quality;
+    }
+    public  int decreaseSellIn() {
+        item.sellIn = item.sellIn - 1;
+        return item.sellIn;
     }
 }
