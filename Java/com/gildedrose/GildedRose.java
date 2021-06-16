@@ -1,62 +1,70 @@
 package com.gildedrose;
 
+import com.gildedrose.Items.*;
+
 class GildedRose {
+
     Item[] items;
+    final String sulfras = "Sulfuras, Hand of Ragnaros";
+    final String conjured = "Conjured Mana Cake";
+    final String agedBrie = "Aged Brie";
+    final String backstagePasses = "Backstage passes to a TAFKAL80ETC concert";
+
 
     public GildedRose(Item[] items) {
         this.items = items;
     }
-//refactor all of this!
-    public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            if (!items[i].name.equals("Aged Brie")
-                    && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (items[i].quality > 0) {
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                        items[i].quality = items[i].quality - 1;
-                    }
-                }
-            } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
 
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
 
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-                    }
-                }
+    public void updateQuality() throws InvalidQualityException {
+
+        for (Item item : items) {
+
+            switch (item.name) {
+                case sulfras:
+                    Sulfuras sulfuras = new Sulfuras(item);
+
+                    sulfuras.checkMinAndMaxQuality();
+                    sulfuras.updateState();
+
+                    break;
+
+                case conjured:
+                    Conjured conjured = new Conjured(item);
+
+                    conjured.checkMinAndMaxQuality();
+
+                    conjured.updateState();
+                    break;
+
+                case agedBrie:
+                    Brie agedBrie = new Brie(item);
+
+                    agedBrie.checkMinAndMaxQuality();
+
+                    agedBrie.updateState();
+                    break;
+
+                case backstagePasses:
+                    BackstagePasses backstagePasses = new BackstagePasses(item);
+
+                    backstagePasses.checkMinAndMaxQuality();
+
+                    backstagePasses.updateState();
+                    break;
+
+                default:
+                    BasicItem basicItem = new BasicItem(item);
+
+                    basicItem.checkMinAndMaxQuality();
+
+                    basicItem.updateState();
+                    break;
             }
 
-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                items[i].sellIn = items[i].sellIn - 1;
-            }
-
-            if (items[i].sellIn < 0) {
-                if (!items[i].name.equals("Aged Brie")) {
-                    if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].quality > 0) {
-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                                items[i].quality = items[i].quality - 1;
-                            }
-                        }
-                    } else {
-                        items[i].quality = items[i].quality - items[i].quality;
-                    }
-                } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
-                    }
-                }
-            }
         }
     }
+
 }
+
+
